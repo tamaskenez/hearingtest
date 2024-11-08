@@ -11,3 +11,4 @@ target_link_libraries(hearingtest PRIVATE
 	absl::strings
 	fmt::fmt
 )
+target_precompile_headers(hearingtest PRIVATE pch.h)
