@@ -1,0 +1,9 @@
+[requires]
+fmt/11.0.2
+abseil/20240722.0
+gtest/1.15.0
+
+[generators]
+CMakeDeps
+
+[options]
