@@ -136,6 +136,23 @@ struct AudioEngineImpl : AudioEngine {
         auto admResult = deviceManager.initialiseWithDefaultDevices(0, 2);
         LOG_IF(FATAL, admResult.isNotEmpty())
           << fmt::format("audioDeviceManager.initialiseWithDefaultDevices returned: {}", admResult.toStdString());
+
+        auto sampleRates = deviceManager.getCurrentAudioDevice()->getAvailableSampleRates();
+        LOG_IF(FATAL, sampleRates.isEmpty()) << "Empty sample rates array";
+
+        const auto audioDeviceSetup = juce::AudioDeviceManager::AudioDeviceSetup{.sampleRate = ra::max(sampleRates)};
+        admResult = deviceManager.initialise(0, 2, nullptr, false, {}, &audioDeviceSetup);
+        LOG_IF(FATAL, admResult.isNotEmpty())
+          << fmt::format("audioDeviceManager.initialiseWithDefaultDevices returned: {}", admResult.toStdString());
+
+        auto* cad = deviceManager.getCurrentAudioDevice();
+        fmt::println(
+          "Using audio device \"{}\" {:.1f}kHz/{}bit via {}",
+          cad->getName().toStdString(),
+          cad->getCurrentSampleRate() / 1000,
+          cad->getCurrentBitDepth(),
+          cad->getTypeName().toStdString()
+        );
         deviceManager.addAudioCallback(&aiodc);
     }
     void addClip(vector<array<float, 2>>&& clip) override
@@ -144,9 +161,7 @@ struct AudioEngineImpl : AudioEngine {
     }
     double sampleRate() const override
     {
-        juce::AudioDeviceManager::AudioDeviceSetup setup;
-        deviceManager.getAudioDeviceSetup(setup);
-        return setup.sampleRate;
+        return deviceManager.getAudioDeviceSetup().sampleRate;
     }
 
     AudioIODeviceCallback aiodc;

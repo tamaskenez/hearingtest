@@ -12,6 +12,7 @@ namespace fs = std::filesystem;
 namespace this_thread = std::this_thread;
 namespace chr = std::chrono;
 namespace numbers = std::numbers;
+namespace ra = std::ranges;
 
 using std::array;
 using std::atomic;

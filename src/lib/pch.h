@@ -20,6 +20,7 @@
 #include <filesystem>
 #include <memory>
 #include <numbers>
+#include <ranges>
 #include <thread>
 #include <utility>
 #include <vector>
