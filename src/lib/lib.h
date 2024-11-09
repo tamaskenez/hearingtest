@@ -18,3 +18,8 @@ using std::atomic;
 using std::make_unique;
 using std::unique_ptr;
 using std::vector;
+
+inline double db2mag(double db)
+{
+    return pow(10, db / 20);
+}

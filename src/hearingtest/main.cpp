@@ -2,14 +2,39 @@
 
 namespace
 {
-vector<array<float, 2>> generateClip(double sampleRate, double lengthSec, double freq)
+
+double gausswin_around_zero_at(size_t n, size_t N, double alpha)
 {
-    auto N = size_t(round(sampleRate * lengthSec));
+    assert(n < N);
+    auto L_minus_1 = 2 * (N - 1);
+    auto sigma = L_minus_1 / (2 * alpha);
+    return exp(-double(n * n) / (2 * sigma * sigma));
+}
+
+vector<array<float, 2>> generateClip(double sampleRate, double freq, double dbfs)
+{
+    constexpr double k_lengthSec = 0.5;
+    constexpr double k_rampLengthSec = 0.1;
+    constexpr double k_rampAlpha = 4;
+
+    CHECK(2 * k_rampLengthSec < k_lengthSec);
+
+    const double amplitude = db2mag(dbfs);
+    const auto rampN = size_t(round(sampleRate * k_rampLengthSec));
+    const auto N = size_t(round(sampleRate * k_lengthSec));
     vector<array<float, 2>> clip(N);
     for (size_t i = 0; i < N; ++i) {
         auto theta = 2 * numbers::pi * i / sampleRate * freq;
-        clip[i][0] = float(sin(theta)) / 100;
-        clip[i][1] = 0.0f;
+        double ramp = 1.0;
+        if (i < rampN) {
+            ramp = gausswin_around_zero_at(rampN - 1 - i, rampN, k_rampAlpha);
+        } else if (N - rampN <= i) {
+            ramp = gausswin_around_zero_at(i + rampN - N, rampN, k_rampAlpha);
+        } else {
+            NOP;
+        }
+        clip[i][0] = float(sin(theta) * amplitude * ramp);
+        clip[i][1] = float(ramp);
     }
     return clip;
 }
@@ -32,7 +57,7 @@ int main(int argc, const char* argv[])
     LOG(INFO) << "Sleeping 1 secs.";
     this_thread::sleep_for(chr::seconds(1));
     LOG(INFO) << "Add clip";
-    ae->addClip(generateClip(ae->sampleRate(), 1.0, 440.0));
+    ae->addClip(generateClip(ae->sampleRate(), 440.0, 0.0));
     LOG(INFO) << "Sleeping 2 secs.";
     this_thread::sleep_for(chr::seconds(2));
     LOG(INFO) << "Done sleeping.";
