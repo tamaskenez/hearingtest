@@ -9,23 +9,23 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 		-Wc++11-extensions
 		-Wcalled-once-parameter
 		-Wcast-align
-		# -Wcast-qual # JUCE
+		# -Wcast-qual
 		-Wcomma
 		-Wconditional-uninitialized
-		# -Wdate-time # JUCE
+		-Wdate-time
 		-Wdeprecated
 		-Wdeprecated-implementations
-		# -Wdocumentation # JUCE
+		# -Wdocumentation
 		-Wduplicate-enum
 		-Wduplicate-method-arg
 		-Wduplicate-method-match
 		-Wexplicit-ownership-type
 		-Wextra-semi
-		# -Wextra-semi-stmt # JUCE
+		# -Wextra-semi-stmt
 		-Wformat=2
 		-Wfour-char-constants
 		-Wimplicit-atomic-properties
-		# -Wimplicit-fallthrough # JUCE
+		-Wimplicit-fallthrough
 		-Wimplicit-retain-self
 		-Wloop-analysis
 		-Wmissing-prototypes
@@ -35,19 +35,19 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 		-Wnullable-to-nonnull-conversion
 		-Wobjc-interface-ivars
 		-Wobjc-missing-property-synthesis
-		# -Wold-style-cast # JUCE
+		# -Wold-style-cast
 		-Wpedantic
 		-Wpragma-pack
 		-Wquoted-include-in-framework-header
-		# -Wredundant-parens # JUCE
+		-Wredundant-parens
 		-Wshadow-all
 		-Wstrict-prototypes
-		# -Wstrict-selector-match # JUCE
-		# -Wsuggest-destructor-override # JUCE
+		-Wstrict-selector-match
+		-Wsuggest-destructor-override
 		-Wsuggest-override
 		-Wswitch-enum
 		-Wundeclared-selector
-		# -Wundef # JUCE
+		# -Wundef
 		-Wunguarded-availability
 		-Wunreachable-code-aggressive
 	)

@@ -1,16 +1,6 @@
 #pragma once
 
-#ifndef __cplusplus
-  #error Some C file is being compiled in the project.
-#endif
+#include "lib/lib.h"
 
-#include "absl/cleanup/cleanup.h"
-#include "absl/log/check.h"
-#include "absl/log/globals.h"
-#include "absl/log/initialize.h"
-#include "absl/log/log.h"
-#include "fmt/format.h"
-#include "fmt/ranges.h"
-#include "fmt/std.h"
-
-#include <filesystem>
+#include "juce_audio_devices/juce_audio_devices.h"
+#include "juce_events/juce_events.h"
