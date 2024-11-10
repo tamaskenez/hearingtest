@@ -5,5 +5,6 @@ add_executable(hearingtest ${sources})
 target_link_libraries(hearingtest PRIVATE
 	lib
     jucemodules
+    Curses::Curses
 )
 target_precompile_headers(hearingtest PRIVATE pch.h)

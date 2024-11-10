@@ -18,9 +18,15 @@
 #include <chrono>
 #include <cmath>
 #include <filesystem>
+#include <map>
 #include <memory>
 #include <numbers>
+#include <optional>
+#include <random>
 #include <ranges>
+#include <string>
+#include <string_view>
 #include <thread>
 #include <utility>
+#include <variant>
 #include <vector>

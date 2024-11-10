@@ -126,7 +126,7 @@ private:
 
     array<atomic<ClipWithPlayHead*>, k_maxNumTracks> inputClips;
     array<ClipWithPlayHead*, k_maxNumTracks> audioThreadClips;
-    array<atomic<ClipWithPlayHead*>, 2 * k_maxNumTracks> outputClips;
+    array<atomic<ClipWithPlayHead*>, k_maxNumTracks + 1> outputClips;
 };
 } // namespace
 
@@ -145,15 +145,18 @@ struct AudioEngineImpl : AudioEngine {
         LOG_IF(FATAL, admResult.isNotEmpty())
           << fmt::format("audioDeviceManager.initialiseWithDefaultDevices returned: {}", admResult.toStdString());
 
+        deviceManager.addAudioCallback(&aiodc);
+    }
+    string infoMessage() override
+    {
         auto* cad = deviceManager.getCurrentAudioDevice();
-        fmt::println(
+        return fmt::format(
           "Using audio device \"{}\" {:.1f}kHz/{}bit via {}",
           cad->getName().toStdString(),
           cad->getCurrentSampleRate() / 1000,
           cad->getCurrentBitDepth(),
           cad->getTypeName().toStdString()
         );
-        deviceManager.addAudioCallback(&aiodc);
     }
     void addClip(vector<array<float, 2>>&& clip) override
     {

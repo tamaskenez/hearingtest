@@ -8,4 +8,5 @@ public:
 
     virtual double sampleRate() const = 0;
     virtual void addClip(vector<array<float, 2>>&& clip) = 0;
+    virtual string infoMessage() = 0;
 };
