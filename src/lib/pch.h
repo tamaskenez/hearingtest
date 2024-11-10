@@ -13,6 +13,7 @@
 #include "fmt/ranges.h"
 #include "fmt/std.h"
 
+#include <algorithm>
 #include <array>
 #include <atomic>
 #include <chrono>
