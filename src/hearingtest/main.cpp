@@ -370,10 +370,10 @@ int innerMain(const fs::path& outputPath)
         this_thread::sleep_for(chr::milliseconds(300));
         ae->addClip(generateClip(sampleRate, tf.freq, dbToTest, k_testSoundLengthSec, tf.lr));
         this_thread::sleep_for(chr::duration<double>(k_testSoundLengthSec));
-        this_thread::sleep_for(chr::milliseconds(300));
+        this_thread::sleep_for(chr::milliseconds(50));
         printw("done.\n");
         refresh();
-        this_thread::sleep_for(chr::milliseconds(300));
+        this_thread::sleep_for(chr::milliseconds(100));
 
         printw("Did you hear it? Press LEFT for left ear, RIGHT for right ear and SPACE if you didn't\n");
         refresh();
